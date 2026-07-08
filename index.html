@@ -598,12 +598,31 @@
 </div>
 
 <script>
-  // демо-отправка формы: заменить на реальный обработчик перед запуском
-  document.getElementById('lead-form').addEventListener('submit', (ev) => {
+  // заявка уходит в Telegram владельцу через бота @tochka_zvuka_bot
+  const TG_TOKEN = '8773133859:AAEjzO0Fq5EPaY9i686DCIcO_PqGSB8y11o';
+  const TG_CHAT = '138636870';
+  document.getElementById('lead-form').addEventListener('submit', async (ev) => {
     ev.preventDefault();
-    document.getElementById('lead-form').style.display = 'none';
-    document.getElementById('sent').style.display = 'block';
-    if (typeof ym === 'function') ym(104341207, 'reachGoal', 'zayavka');
+    const f = ev.target;
+    const phone = f.phone.value.trim();
+    const problem = f.problem.value.trim();
+    const text = '\u{1F4E9} Заявка с tochka-zvuka.ru\nТелефон: ' + phone + (problem ? '\nЧто со звуком: ' + problem : '');
+    const btn = f.querySelector('button');
+    btn.disabled = true;
+    try {
+      const r = await fetch('https://api.telegram.org/bot' + TG_TOKEN + '/sendMessage', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: TG_CHAT, text })
+      });
+      if (!r.ok) throw new Error('tg ' + r.status);
+      f.style.display = 'none';
+      document.getElementById('sent').style.display = 'block';
+      if (typeof ym === 'function') ym(104341207, 'reachGoal', 'zayavka');
+    } catch (e) {
+      btn.disabled = false;
+      alert('Не получилось отправить. Позвоните или напишите в WhatsApp: +7 (903) 240-50-40');
+    }
   });
 
   // цели Метрики: клики по телефону и мессенджерам
