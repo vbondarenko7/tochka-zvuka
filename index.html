@@ -612,15 +612,15 @@
     const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     const problem = f.problem.value.trim();
     const text = '\u{1F4E9} Заявка с tochka-zvuka.ru\nТелефон: ' + phone +
-      '\nКопировать: <code>' + phone + '</code>' +
       (problem ? '\nЧто со звуком: ' + esc(problem) : '');
+    const keyboard = { inline_keyboard: [[{ text: '\u{1F4CB} Скопировать номер', copy_text: { text: phone } }]] };
     const btn = f.querySelector('button');
     btn.disabled = true;
     try {
       const r = await fetch('https://api.telegram.org/bot' + TG_TOKEN + '/sendMessage', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ chat_id: TG_CHAT, text, parse_mode: 'HTML' })
+        body: JSON.stringify({ chat_id: TG_CHAT, text, parse_mode: 'HTML', reply_markup: keyboard })
       });
       if (!r.ok) throw new Error('tg ' + r.status);
       f.style.display = 'none';
