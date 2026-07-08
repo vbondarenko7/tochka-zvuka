@@ -303,6 +303,19 @@
     .colophon { flex-direction: column; gap: 8px; }
   }
 </style>
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=104341207', 'ym');
+
+    ym(104341207, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/104341207" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
 </head>
 <body>
 
@@ -590,7 +603,14 @@
     ev.preventDefault();
     document.getElementById('lead-form').style.display = 'none';
     document.getElementById('sent').style.display = 'block';
+    if (typeof ym === 'function') ym(104341207, 'reachGoal', 'zayavka');
   });
+
+  // цели Метрики: клики по телефону и мессенджерам
+  document.querySelectorAll('a[href^="tel:"]').forEach(a =>
+    a.addEventListener('click', () => { if (typeof ym === 'function') ym(104341207, 'reachGoal', 'phone_click'); }));
+  document.querySelectorAll('a[href*="wa.me"], a[href*="t.me"]').forEach(a =>
+    a.addEventListener('click', () => { if (typeof ym === 'function') ym(104341207, 'reachGoal', 'messenger_click'); }));
 
   // липкая панель не должна перекрывать форму заявки
   const bar = document.querySelector('.mobile-bar');
