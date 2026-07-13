@@ -308,19 +308,7 @@
   .final h2 { font-family: 'Fraunces', serif; font-weight: 400; font-size: clamp(34px, 4.6vw, 54px); letter-spacing: -0.025em; line-height: 1.04; margin: 0 0 16px; }
   .final h2 em { font-style: italic; color: var(--accent); font-weight: 300; }
   .final .sub { font-family: 'Fraunces', serif; font-style: italic; font-weight: 300; font-size: 18px; line-height: 1.5; color: var(--tx-2); margin: 0 0 40px; }
-  form { display: grid; text-align: left; }
-  input, textarea {
-    width: 100%; background: transparent;
-    border: 0; border-bottom: 1px solid var(--tx);
-    color: var(--tx); padding: 15px 2px; font-size: 17px;
-    font-family: 'Fraunces', serif; border-radius: 0;
-  }
-  input::placeholder, textarea::placeholder { color: var(--mute); font-style: italic; }
-  input:focus, textarea:focus { outline: none; border-bottom-color: var(--accent); }
-  textarea { min-height: 80px; resize: vertical; }
-  form .btn { margin-top: 30px; justify-self: center; }
-  .form-note { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--mute); text-align: center; margin-top: 16px; }
-  .msgrs { display: flex; gap: 28px; justify-content: center; margin-top: 36px; flex-wrap: wrap; }
+  .msgrs { display: flex; gap: 28px; justify-content: center; margin-top: 24px; flex-wrap: wrap; }
   .msgrs a {
     color: var(--tx); text-decoration: none;
     font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
@@ -328,8 +316,6 @@
     transition: color .2s, border-color .2s;
   }
   .msgrs a:hover { color: var(--accent); border-color: var(--accent); }
-  .sent { display: none; text-align: center; font-family: 'Fraunces', serif; font-style: italic; font-size: 20px; padding: 22px 0; }
-  .sent b { color: var(--accent); font-style: normal; font-weight: 500; }
 
   /* ── Подвал ─────────────────────────────────────────────── */
   footer { border-top: 1px solid var(--rule); padding: 44px 0 40px; }
@@ -400,9 +386,8 @@
       <small>Установка и подключение · Москва</small>
     </div>
     <div class="meta">
-      <!-- ПЛЕЙСХОЛДЕР: реальный номер -->
       <a class="phone-num" href="tel:+79032405040">+7 (903) 240-50-40</a>
-      <a class="cta" href="#zayavka">Вызвать мастера</a>
+      <a class="cta" href="tel:+79032405040">Позвонить</a>
     </div>
   </header>
 
@@ -413,8 +398,8 @@
     <p class="standfirst">Соберём и подключим кинотеатр, саундбар или колонки к ресиверу, настроим звук с телевизора и приставок, уберём провода и покажем, какую кнопку жать. Сегодня вечером уже смотрите кино.</p>
     <p class="price-line"><b>Выезд и подключение — от 2 900 ₽.</b><br>Точную цену называем по телефону до выезда, и она не меняется.</p>
     <div class="hero-cta">
-      <a class="btn" href="#zayavka">Вызвать мастера</a>
-      <a class="btn line" href="tel:+79032405040">Позвонить</a>
+      <a class="btn" href="tel:+79032405040">Позвонить: +7 (903) 240-50-40</a>
+      <a class="btn line" href="https://t.me/vad6277">Написать в Telegram</a>
     </div>
     <ul class="bullets">
       <li><b>Один визит — <em>и всё работает</em></b>Свои инструменты, кабели и переходники с собой.</li>
@@ -620,20 +605,12 @@
     <div class="final-inner">
       <div class="rule3">·  ·  ·</div>
       <h2>Расскажите, что <em>не подключается</em>.</h2>
-      <p class="sub">Пять минут по телефону — и вы знаете точную цену и когда приедет мастер.</p>
-      <!-- ВНИМАНИЕ: форма демонстрационная. Подключить обработчик (Telegram-бот / почта / CRM) перед запуском -->
-      <form id="lead-form">
-        <input type="tel" name="phone" value="+7 " placeholder="+7 (___) ___-__-__" required autocomplete="tel">
-        <textarea name="problem" placeholder="Что за техника? Например: «новый Samsung и старый кинотеатр Sony» — необязательно"></textarea>
-        <button class="btn" type="submit">Вызвать мастера</button>
-        <p class="form-note">Позвоним один раз, по делу. Никаких рассылок.</p>
-      </form>
-      <div class="sent" id="sent"><b>Спасибо.</b> Перезвоним в ближайшее время — обычно в течение часа в рабочее время.</div>
+      <p class="sub">Позвоните — за пять минут скажем, лечится ли это, сколько стоит и когда приедет мастер.</p>
+      <a class="btn" href="tel:+79032405040">Позвонить: +7 (903) 240-50-40</a>
+      <p class="sub" style="margin:36px 0 0; font-size:16px;">Не любите звонить? Напишите напрямую — отвечаем быстро:</p>
       <div class="msgrs">
-        <!-- ПЛЕЙСХОЛДЕРЫ: реальные ссылки -->
-        <a href="tel:+79032405040">Позвонить</a>
-        <a href="https://wa.me/79032405040">WhatsApp</a>
         <a href="https://t.me/vad6277">Telegram</a>
+        <a href="https://wa.me/79032405040">WhatsApp</a>
       </div>
     </div>
   </section>
@@ -652,8 +629,8 @@
       <div class="col">
         <h4>Связь</h4>
         <a href="tel:+79032405040">+7 (903) 240-50-40</a>
-        <a href="#">[почта]</a>
-        <a href="#">Политика перс. данных</a>
+        <a href="https://t.me/vad6277">Telegram</a>
+        <a href="https://wa.me/79032405040">WhatsApp</a>
       </div>
     </div>
     <div class="colophon">
@@ -666,56 +643,16 @@
 
 <!-- Липкая панель на мобайле -->
 <div class="mobile-bar">
-  <a class="btn line" href="tel:+79032405040">Позвонить</a>
-  <a class="btn" href="#zayavka">Вызвать мастера</a>
+  <a class="btn line" href="https://t.me/vad6277">Telegram</a>
+  <a class="btn" href="tel:+79032405040">Позвонить</a>
 </div>
 
 <script>
-  // заявка уходит в Telegram владельцу через бота @tochka_zvuka_bot
-  const TG_TOKEN = '8773133859:AAEjzO0Fq5EPaY9i686DCIcO_PqGSB8y11o';
-  const TG_CHAT = '138636870';
-  document.getElementById('lead-form').addEventListener('submit', async (ev) => {
-    ev.preventDefault();
-    const f = ev.target;
-    // нормализуем телефон в слитный формат +7XXXXXXXXXX
-    let digits = f.phone.value.replace(/\D/g, '');
-    if (digits.length === 11 && digits[0] === '8') digits = '7' + digits.slice(1);
-    if (digits.length === 10) digits = '7' + digits;
-    const phone = '+' + digits;
-    const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    const problem = f.problem.value.trim();
-    const text = '\u{1F4E9} Заявка с tochka-zvuka.ru\nТелефон: ' + phone +
-      (problem ? '\nЧто со звуком: ' + esc(problem) : '');
-    const keyboard = { inline_keyboard: [[{ text: '\u{1F4CB} Скопировать номер', copy_text: { text: phone } }]] };
-    const btn = f.querySelector('button');
-    btn.disabled = true;
-    try {
-      const r = await fetch('https://api.telegram.org/bot' + TG_TOKEN + '/sendMessage', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ chat_id: TG_CHAT, text, parse_mode: 'HTML', reply_markup: keyboard })
-      });
-      if (!r.ok) throw new Error('tg ' + r.status);
-      f.style.display = 'none';
-      document.getElementById('sent').style.display = 'block';
-      if (typeof ym === 'function') ym(104341207, 'reachGoal', 'zayavka');
-    } catch (e) {
-      btn.disabled = false;
-      alert('Не получилось отправить. Позвоните или напишите в WhatsApp: +7 (903) 240-50-40');
-    }
-  });
-
   // цели Метрики: клики по телефону и мессенджерам
   document.querySelectorAll('a[href^="tel:"]').forEach(a =>
     a.addEventListener('click', () => { if (typeof ym === 'function') ym(104341207, 'reachGoal', 'phone_click'); }));
   document.querySelectorAll('a[href*="wa.me"], a[href*="t.me"]').forEach(a =>
     a.addEventListener('click', () => { if (typeof ym === 'function') ym(104341207, 'reachGoal', 'messenger_click'); }));
-
-  // липкая панель не должна перекрывать форму заявки
-  const bar = document.querySelector('.mobile-bar');
-  new IntersectionObserver((entries) => {
-    bar.style.display = entries[0].isIntersecting ? 'none' : '';
-  }).observe(document.getElementById('zayavka'));
 </script>
 </body>
 </html>
