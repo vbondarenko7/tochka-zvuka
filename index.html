@@ -80,286 +80,463 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=IBM+Plex+Mono:wght@400;500;600&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
 <style>
-  /* тёмный editorial: кинозал, тёплый чёрный + янтарь */
+  /* чертёжный стиль: миллиметровка, графит, красный карандаш */
   :root {
-    --bg: #100e0b;
-    --bg-2: #1b1812;
-    --tx: #ece5d6;
-    --tx-2: #cfc6b5;
-    --mute: #978d7c;
-    --rule: #ece5d616;
-    --accent: #dfa14f;
-    --accent-deep: #cf9040;
+    --paper: #f8f6f0;
+    --paper-2: #f1eee6;
+    --ink: #1e2731;
+    --ink-2: #39434f;
+    --pencil: #6b7480;
+    --grid: rgba(46, 84, 126, .07);
+    --grid-2: rgba(46, 84, 126, .12);
+    --rule: rgba(30, 39, 49, .16);
+    --red: #c2452a;
+    --red-soft: rgba(194, 69, 42, .08);
+    --mono: 'IBM Plex Mono', ui-monospace, monospace;
+    --hand: 'Caveat', cursive;
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   html, body { margin: 0; padding: 0; }
   body {
-    background: var(--bg);
-    background-image: radial-gradient(1100px 560px at 72% -8%, rgba(223,161,79,.07), transparent 62%);
-    background-repeat: no-repeat;
-    color: var(--tx);
+    background: var(--paper);
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px),
+      linear-gradient(var(--grid-2) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-2) 1px, transparent 1px);
+    background-size: 10px 10px, 10px 10px, 50px 50px, 50px 50px;
+    color: var(--ink);
     font-family: 'Inter', system-ui, sans-serif;
-    font-weight: 400;
     font-size: 16px;
-    line-height: 1.55;
+    line-height: 1.6;
     -webkit-font-smoothing: antialiased;
   }
-  ::selection { background: var(--tx); color: var(--bg); }
-  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 56px; }
+  ::selection { background: var(--ink); color: var(--paper); }
 
-  .btn {
-    display: inline-block;
-    background: var(--tx);
-    color: var(--bg);
-    text-decoration: none;
-    border: 1px solid var(--tx);
-    padding: 16px 32px;
-    font-size: 12px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background .25s, color .25s, border-color .25s;
-    font-family: 'Inter', sans-serif;
+  /* ── чертёжный лист (рамка) ─────────────────────────────── */
+  .sheet {
+    max-width: 1160px;
+    margin: 20px auto 0;
+    border: 1.5px solid var(--ink);
+    position: relative;
+    background: rgba(248, 246, 240, .55);
   }
-  .btn:hover { background: var(--accent); border-color: var(--accent); color: #171310; }
-  .btn.line { background: transparent; color: var(--tx); }
-  .btn.line:hover { background: var(--tx); color: var(--bg); }
+  .sheet::after {
+    content: "";
+    position: absolute; inset: 6px;
+    border: 1px solid var(--rule);
+    pointer-events: none;
+  }
+  .wrap { max-width: 1000px; margin: 0 auto; padding: 0 48px; position: relative; z-index: 1; }
 
-  /* ── Панель ─────────────────────────────────────────────── */
+  /* ── кнопки-штампы ──────────────────────────────────────── */
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: var(--mono);
+    font-size: 12px; font-weight: 600;
+    letter-spacing: .13em; text-transform: uppercase;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1.5px solid var(--ink);
+    padding: 16px 26px;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 4px 4px 0 rgba(30, 39, 49, .16);
+    transition: transform .16s ease, box-shadow .16s ease, background .16s ease, color .16s ease, border-color .16s ease;
+    position: relative;
+  }
+  .btn::after { content: "→"; font-size: 14px; transition: transform .16s ease; }
+  .btn:hover {
+    border-color: var(--red); color: var(--red);
+    transform: translate(-1px, -1px);
+    box-shadow: 6px 6px 0 rgba(194, 69, 42, .22);
+  }
+  .btn:hover::after { transform: translateX(4px); }
+  .btn:active { transform: translate(3px, 3px); box-shadow: 0 0 0 rgba(0,0,0,0); }
+  .btn:focus-visible { outline: 2px dashed var(--red); outline-offset: 4px; }
+  .btn.fill { background: var(--ink); color: var(--paper); }
+  .btn.fill:hover { background: var(--red); border-color: var(--red); color: var(--paper); }
+  .btn.tel::after { content: "☎"; font-size: 15px; }
+
+  /* ── панель ─────────────────────────────────────────────── */
   .topbar {
     display: grid;
     grid-template-columns: 1fr auto;
     align-items: center;
-    padding: 26px 0 20px;
-    border-bottom: 1px solid var(--rule);
+    padding: 22px 0 18px;
+    border-bottom: 1.5px solid var(--ink);
   }
-  .masthead { font-family: 'Fraunces', serif; font-weight: 500; font-size: 22px; font-style: italic; }
-  .masthead .dot { color: var(--accent); }
-  .masthead small { display:block; font-family:'Inter',sans-serif; font-style:normal; font-weight:500; font-size:10.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--mute); margin-top:4px; }
-  .topbar .meta { display: flex; gap: 26px; align-items: center; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; }
-  .topbar .meta a { color: var(--tx); text-decoration: none; }
-  .topbar .meta a:hover { color: var(--accent); }
-  .topbar .meta .cta { border-bottom: 1px solid var(--tx); padding-bottom: 2px; }
+  .masthead { font-weight: 800; font-size: 21px; letter-spacing: -0.01em; }
+  .masthead .dot { color: var(--red); }
+  .masthead small {
+    display: block; font-family: var(--mono); font-weight: 500;
+    font-size: 10px; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--pencil); margin-top: 5px;
+  }
+  .topbar .meta { display: flex; gap: 24px; align-items: center; font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; }
+  .topbar .meta a { color: var(--ink); text-decoration: none; border-bottom: 1px solid transparent; transition: color .15s, border-color .15s; }
+  .topbar .meta a:hover { color: var(--red); border-bottom-color: var(--red); }
+  .topbar .meta .cta { border-bottom: 1.5px solid var(--ink); padding-bottom: 2px; }
 
-  /* ── Первый экран ───────────────────────────────────────── */
-  .hero { padding: 80px 0 64px; border-bottom: 1px solid var(--rule); }
-  .kicker {
-    font-size: 11px; letter-spacing: .22em; text-transform: uppercase;
-    color: var(--accent); margin-bottom: 28px;
-    display: flex; align-items: center; gap: 14px;
+  /* ── размерные линии между блоками ──────────────────────── */
+  .dim {
+    display: flex; align-items: center; gap: 16px;
+    padding: 0; margin: 0 48px;
+    user-select: none;
   }
-  .kicker::before { content: ""; width: 28px; height: 1px; background: var(--accent); }
-  h1.headline {
-    font-family: 'Fraunces', serif; font-weight: 400;
-    font-size: clamp(40px, 6.4vw, 82px);
-    line-height: 1.0; letter-spacing: -0.03em;
-    margin: 0 0 30px; max-width: 20ch;
-    font-variation-settings: "opsz" 144;
+  .dim .l {
+    flex: 1; height: 1px; background: var(--ink); position: relative; opacity: .75;
   }
-  h1 .it { font-style: italic; font-weight: 300; color: var(--accent); }
-  .standfirst {
-    font-family: 'Fraunces', serif; font-style: italic; font-weight: 300;
-    font-size: 20px; line-height: 1.5; color: var(--tx-2);
-    max-width: 54ch; margin: 0 0 26px;
+  .dim .l::before, .dim .l::after {
+    content: ""; position: absolute; top: -3.5px; border: solid var(--ink);
+    border-width: 0 0 1px 1px; width: 7px; height: 7px; opacity: .9;
   }
-  .price-line {
-    font-size: 15.5px; color: var(--tx); margin: 0 0 34px; max-width: 60ch;
-    border-left: 2px solid var(--accent); padding-left: 16px; line-height: 1.6;
+  .dim .l.a::before { left: 0; transform: rotate(45deg); }
+  .dim .l.a::after { display: none; }
+  .dim .l.b::after { right: 0; transform: rotate(225deg); }
+  .dim .l.b::before { display: none; }
+  .dim .t {
+    font-family: var(--mono); font-size: 10.5px; font-weight: 500;
+    letter-spacing: .22em; text-transform: uppercase; color: var(--pencil);
+    white-space: nowrap;
   }
-  .price-line b { font-family: 'Fraunces', serif; font-size: 19px; }
-  .hero-cta { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; margin-bottom: 44px; }
-  .bullets {
-    list-style: none; margin: 0; padding: 26px 0 0;
-    border-top: 1px solid var(--rule);
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px;
-  }
-  .bullets li { font-size: 14.5px; line-height: 1.5; color: var(--tx-2); }
-  .bullets li b { display: block; font-family: 'Fraunces', serif; font-weight: 400; font-style: normal; font-size: 17px; color: var(--tx); margin-bottom: 6px; letter-spacing: -0.01em; }
-  .bullets li b em { color: var(--accent); font-style: italic; }
 
-  /* ── Метки секций ───────────────────────────────────────── */
+  /* ── заголовки секций ───────────────────────────────────── */
+  section { padding: 72px 0 64px; }
   .section-label {
-    font-size: 10.5px; letter-spacing: .24em; text-transform: uppercase;
-    color: var(--accent); display: flex; align-items: center; gap: 14px; margin-bottom: 30px;
+    font-family: var(--mono); font-size: 11px; font-weight: 600;
+    letter-spacing: .2em; text-transform: uppercase; color: var(--red);
+    display: flex; align-items: center; gap: 12px; margin-bottom: 26px;
   }
-  .section-label::before { content: ""; width: 28px; height: 1px; background: var(--accent); }
+  .section-label::before { content: "▸"; font-size: 9px; }
   .section-title {
-    font-family: 'Fraunces', serif; font-weight: 400;
-    font-size: clamp(32px, 4.4vw, 54px);
-    line-height: 1.04; letter-spacing: -0.025em;
-    margin: 0 0 44px; max-width: 22ch;
+    font-weight: 800;
+    font-size: clamp(30px, 4.2vw, 50px);
+    line-height: 1.06; letter-spacing: -0.03em;
+    margin: 0 0 40px; max-width: 22ch;
   }
-  .section-title em { font-style: italic; color: var(--accent); font-weight: 300; }
-  .accent-divider { border: 0; height: 1px; background: var(--accent); opacity: .5; margin: 0; }
+  .section-title em { font-style: normal; color: var(--red); }
 
-  /* ── Анти-развод ────────────────────────────────────────── */
-  .trust { padding: 88px 0 80px; }
-  .trust .intro { font-size: 16.5px; color: var(--tx-2); max-width: 60ch; margin: -20px 0 44px; line-height: 1.7; }
-  .trust-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  /* ── герой ──────────────────────────────────────────────── */
+  .hero { padding: 64px 0 56px; }
+  .hero-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 48px; align-items: start; }
+  .kicker {
+    font-family: var(--mono); font-size: 11px; font-weight: 600;
+    letter-spacing: .2em; text-transform: uppercase; color: var(--pencil);
+    margin-bottom: 26px; display: flex; align-items: center; gap: 12px;
+  }
+  .kicker::before { content: ""; width: 26px; height: 1px; background: var(--red); }
+  h1.headline {
+    font-weight: 800;
+    font-size: clamp(36px, 5.4vw, 62px);
+    line-height: 1.03; letter-spacing: -0.035em;
+    margin: 0 0 26px; max-width: 18ch;
+  }
+  h1 .it {
+    text-decoration: underline wavy var(--red);
+    text-decoration-thickness: 2.5px;
+    text-underline-offset: 7px;
+  }
+  .standfirst { font-size: 17.5px; line-height: 1.65; color: var(--ink-2); max-width: 52ch; margin: 0 0 24px; }
+  .price-line {
+    font-family: var(--mono); font-size: 14px; line-height: 1.7; color: var(--ink);
+    border: 1.5px solid var(--ink); background: var(--paper);
+    padding: 14px 18px; margin: 0 0 30px; max-width: 480px;
+    box-shadow: 4px 4px 0 rgba(30,39,49,.1);
+    position: relative;
+  }
+  .price-line b { font-size: 16px; }
+  .price-line .st {
+    position: absolute; top: -14px; right: -10px;
+    font-family: var(--mono); font-size: 9.5px; font-weight: 600; letter-spacing: .12em;
+    color: var(--red); border: 1.5px solid var(--red); background: var(--paper);
+    padding: 4px 8px; transform: rotate(3deg); text-transform: uppercase;
+  }
+  .hero-cta { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 40px; }
+
+  /* чертёж-схема в герое */
+  .draft-card { position: relative; }
+  .draft-card .cap {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: .16em;
+    text-transform: uppercase; color: var(--pencil);
+    display: flex; justify-content: space-between;
+    border-bottom: 1px solid var(--rule); padding-bottom: 8px; margin-bottom: 6px;
+  }
+  .draft-card svg { width: 100%; height: auto; display: block; }
+  .hand-note {
+    font-family: var(--hand); font-size: 21px; color: var(--red);
+    transform: rotate(-2deg); display: inline-block; line-height: 1.2;
+  }
+
+  /* буллиты как выноски */
+  .bullets {
+    list-style: none; margin: 0; padding: 24px 0 0;
+    border-top: 1.5px solid var(--ink);
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 26px;
+  }
+  .bullets li { font-size: 13.5px; line-height: 1.55; color: var(--ink-2); position: relative; padding-top: 14px; }
+  .bullets li::before {
+    content: ""; position: absolute; top: -5px; left: 1px;
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--paper); border: 2px solid var(--red);
+  }
+  .bullets li b {
+    display: block; font-weight: 800; font-size: 15.5px;
+    color: var(--ink); margin-bottom: 6px; letter-spacing: -0.01em;
+  }
+  .bullets li b em { font-style: normal; color: var(--red); }
+
+  /* ── анти-развод: узлы ──────────────────────────────────── */
+  .trust .intro { font-size: 16px; color: var(--ink-2); max-width: 62ch; margin: -16px 0 40px; line-height: 1.7; }
+  .trust-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
   .trust-card {
-    background: var(--bg-2); border: 1px solid var(--rule); padding: 30px;
-    transition: border-color .3s;
+    border: 1.5px solid var(--ink); background: var(--paper);
+    padding: 26px; position: relative;
+    box-shadow: 5px 5px 0 rgba(30,39,49,.08);
+    transition: box-shadow .2s ease, transform .2s ease;
   }
-  .trust-card:hover { border-color: var(--accent); }
-  .trust-card .n { font-family: 'Fraunces', serif; font-style: italic; font-size: 34px; color: var(--accent); line-height: 1; margin-bottom: 18px; }
-  .trust-card h3 { font-family: 'Fraunces', serif; font-weight: 500; font-size: 21px; letter-spacing: -0.015em; margin: 0 0 10px; }
-  .trust-card p { font-size: 14.5px; line-height: 1.6; color: var(--tx-2); margin: 0; }
+  .trust-card:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0 rgba(194,69,42,.14); }
+  .trust-card .n {
+    position: absolute; top: -13px; left: 18px;
+    font-family: var(--mono); font-size: 12px; font-weight: 600;
+    background: var(--paper); border: 1.5px solid var(--ink);
+    padding: 3px 10px; letter-spacing: .1em;
+  }
+  .trust-card h3 { font-weight: 800; font-size: 19px; letter-spacing: -0.015em; margin: 8px 0 10px; }
+  .trust-card p { font-size: 14px; line-height: 1.65; color: var(--ink-2); margin: 0; }
 
-  /* ── Что подключаем ─────────────────────────────────────── */
-  .what { padding: 88px 0 80px; background: var(--bg-2); }
-  .what-list { border-top: 1px solid var(--tx); }
+  /* ── что подключаем: спецификация ───────────────────────── */
+  .what { background: var(--paper-2); border-top: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink); }
+  .what-list { border-top: 1.5px solid var(--ink); }
   .what-row {
-    display: grid; grid-template-columns: 56px 1fr; gap: 28px;
-    padding: 20px 0; border-bottom: 1px solid var(--rule);
-    align-items: baseline; font-size: 17px;
+    display: grid; grid-template-columns: 64px 1fr; gap: 24px;
+    padding: 18px 0; border-bottom: 1px solid var(--rule);
+    align-items: baseline;
+    transition: background .2s ease, padding-left .2s ease;
   }
-  .what-row:hover { background: linear-gradient(to right, #ece5d60a 0%, transparent 60%); }
-  .what-row .gn { font-family: 'Fraunces', serif; font-style: italic; font-size: 16px; color: var(--accent); }
-  .what-row .t { font-family: 'Fraunces', serif; font-size: 20px; letter-spacing: -0.01em; }
-  .what-row .t small { display: block; font-family: 'Inter', sans-serif; font-size: 13.5px; color: var(--mute); margin-top: 4px; letter-spacing: 0; }
-  .what-row.hot .t { color: var(--accent); }
-  .what .note { font-family: 'Fraunces', serif; font-style: italic; font-size: 16px; color: var(--tx-2); margin-top: 30px; max-width: 56ch; }
+  .what-row:hover { background: var(--red-soft); padding-left: 10px; }
+  .what-row .gn { font-family: var(--mono); font-size: 12px; font-weight: 600; color: var(--red); letter-spacing: .08em; }
+  .what-row .t { font-weight: 800; font-size: 18px; letter-spacing: -0.015em; }
+  .what-row .t small {
+    display: block; font-weight: 400; font-family: var(--mono);
+    font-size: 12.5px; color: var(--pencil); margin-top: 5px; line-height: 1.6;
+  }
+  .what-row.hot .t { color: var(--red); }
+  .what .note { font-size: 15px; color: var(--ink-2); margin-top: 28px; max-width: 58ch; }
+  .what .note .hand-note { font-size: 20px; margin-right: 8px; }
 
-  /* ── Как проходит визит ─────────────────────────────────── */
-  .steps { padding: 88px 0 80px; }
-  .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+  /* ── шаги: этапы с размерной линией ─────────────────────── */
+  .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; position: relative; padding-top: 34px; }
+  .steps-grid::before {
+    content: ""; position: absolute; top: 15px; left: 15px; right: 15px;
+    height: 1px; background: var(--ink); opacity: .5;
+  }
+  .step { position: relative; }
   .step .n {
-    font-family: 'Fraunces', serif; font-style: italic;
-    font-size: 44px; color: var(--accent); line-height: 1; margin-bottom: 16px;
+    position: absolute; top: -34px; left: 0;
+    width: 30px; height: 30px; border-radius: 50%;
+    border: 1.5px solid var(--ink); background: var(--paper);
+    font-family: var(--mono); font-size: 13px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
   }
-  .step h3 { font-family: 'Fraunces', serif; font-weight: 500; font-size: 21px; margin: 0 0 10px; letter-spacing: -0.015em; }
-  .step p { font-size: 14.5px; line-height: 1.65; color: var(--tx-2); margin: 0; }
+  .step h3 { font-weight: 800; font-size: 18.5px; margin: 0 0 8px; letter-spacing: -0.015em; }
+  .step p { font-size: 14px; line-height: 1.65; color: var(--ink-2); margin: 0; }
 
-  /* ── Цены ───────────────────────────────────────────────── */
-  .prices { padding: 88px 0 80px; background: var(--bg-2); }
-  .price-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 44px; }
-  .price-card { border-top: 1px solid var(--tx); padding-top: 22px; }
-  .price-card .pnum { font-family: 'Fraunces', serif; font-style: italic; font-size: 13px; color: var(--mute); margin-bottom: 12px; }
-  .price-card h3 { font-family: 'Fraunces', serif; font-weight: 400; font-size: 25px; line-height: 1.1; letter-spacing: -0.02em; margin: 0 0 12px; }
-  .price-card h3 em { font-style: italic; color: var(--accent); font-weight: 300; }
-  .price-card .cost { font-family: 'Fraunces', serif; font-size: 20px; margin-bottom: 16px; }
-  .price-card .cost .cur { color: var(--accent); font-style: italic; }
-  .price-card p { font-size: 14px; line-height: 1.6; color: var(--tx-2); margin: 0; }
+  /* ── цены: позиции спецификации ─────────────────────────── */
+  .prices { background: var(--paper-2); border-top: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink); }
+  .price-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .price-card {
+    border: 1.5px solid var(--ink); background: var(--paper);
+    padding: 24px; display: flex; flex-direction: column; position: relative;
+    box-shadow: 5px 5px 0 rgba(30,39,49,.08);
+    transition: box-shadow .2s ease, transform .2s ease;
+  }
+  .price-card:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0 rgba(194,69,42,.14); }
+  .price-card .pnum {
+    position: absolute; top: -13px; left: 18px;
+    font-family: var(--mono); font-size: 11px; font-weight: 600;
+    background: var(--paper); border: 1.5px solid var(--ink);
+    padding: 3px 10px; letter-spacing: .1em; text-transform: uppercase;
+  }
+  .price-card h3 { font-weight: 800; font-size: 21px; line-height: 1.15; letter-spacing: -0.02em; margin: 10px 0 14px; }
+  .price-card h3 em { font-style: normal; color: var(--red); }
+  .price-card .cost {
+    font-family: var(--mono); font-size: 17px; font-weight: 600;
+    border: 1.5px dashed var(--red); color: var(--red);
+    display: inline-block; align-self: flex-start;
+    padding: 6px 12px; margin-bottom: 16px; transform: rotate(-1deg);
+  }
+  .price-card p { font-size: 13.5px; line-height: 1.65; color: var(--ink-2); margin: 0; }
   .prices .price-foot {
-    margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--rule);
-    font-size: 13.5px; color: var(--mute); display: flex; justify-content: space-between; gap: 30px; flex-wrap: wrap;
+    margin-top: 40px; padding-top: 18px; border-top: 1px solid var(--rule);
+    font-family: var(--mono); font-size: 12px; color: var(--pencil);
+    display: flex; justify-content: space-between; gap: 28px; flex-wrap: wrap;
+    letter-spacing: .04em;
   }
-  .prices .price-foot b { color: var(--tx); font-weight: 500; }
+  .prices .price-foot b { color: var(--ink); font-weight: 600; }
 
-  /* ── Возражения Q&A ─────────────────────────────────────── */
-  .qa { padding: 88px 0 80px; }
+  /* ── возражения: пометки на полях ───────────────────────── */
   .qa-list { max-width: 720px; }
-  .qa-list .exchange { padding: 24px 0; border-bottom: 1px solid var(--rule); }
+  .qa-list .exchange { padding: 22px 0; border-bottom: 1px solid var(--rule); }
   .qa-list .exchange:first-child { padding-top: 0; }
   .qa-list .q {
-    font-weight: 600; font-size: 17px; line-height: 1.4; margin: 0 0 12px;
-    display: grid; grid-template-columns: 26px 1fr; gap: 12px;
+    font-weight: 800; font-size: 16.5px; line-height: 1.4; margin: 0 0 12px;
+    display: grid; grid-template-columns: 30px 1fr; gap: 10px;
   }
-  .qa-list .q::before { content: "—"; font-family: 'Fraunces', serif; font-style: italic; color: var(--accent); font-size: 19px; }
+  .qa-list .q::before { content: "В."; font-family: var(--mono); color: var(--red); font-weight: 600; font-size: 14px; padding-top: 2px; }
   .qa-list .a {
-    font-family: 'Fraunces', serif; font-style: italic; font-weight: 300;
-    font-size: 17px; line-height: 1.6; color: var(--tx-2); margin: 0;
-    display: grid; grid-template-columns: 26px 1fr; gap: 12px;
+    font-size: 15.5px; line-height: 1.65; color: var(--ink-2); margin: 0;
+    display: grid; grid-template-columns: 30px 1fr; gap: 10px;
   }
-  .qa-list .a::before { content: "О"; font-family: 'Fraunces', serif; font-style: normal; color: var(--mute); font-size: 18px; }
-  .qa-pull {
-    margin: 48px 0 0; padding: 40px 0;
-    border-top: 1px solid var(--tx); border-bottom: 1px solid var(--tx);
-    text-align: center;
+  .qa-list .a::before { content: "О."; font-family: var(--mono); color: var(--pencil); font-weight: 600; font-size: 14px; padding-top: 2px; }
+
+  /* штамп-гарантия */
+  .qa-pull { margin: 48px 0 0; display: flex; justify-content: center; }
+  .qa-pull .stamp {
+    border: 2.5px solid var(--red); color: var(--red);
+    padding: 26px 40px; text-align: center; transform: rotate(-2deg);
+    position: relative; background: var(--paper);
+    box-shadow: 0 0 0 4px var(--paper), 0 0 0 5.5px var(--red);
   }
   .qa-pull blockquote {
-    margin: 0 auto; max-width: 26ch;
-    font-family: 'Fraunces', serif; font-weight: 300;
-    font-size: clamp(28px, 3.6vw, 42px);
-    line-height: 1.08; letter-spacing: -0.02em;
+    margin: 0; font-weight: 800;
+    font-size: clamp(24px, 3.4vw, 38px);
+    line-height: 1.1; letter-spacing: -0.02em; text-transform: uppercase;
   }
-  .qa-pull blockquote em { color: var(--accent); font-style: italic; }
-  .qa-pull cite { display: block; margin-top: 22px; font-size: 10.5px; letter-spacing: .24em; text-transform: uppercase; font-style: normal; color: var(--mute); }
+  .qa-pull cite {
+    display: block; margin-top: 12px;
+    font-family: var(--mono); font-size: 11px; letter-spacing: .18em;
+    text-transform: uppercase; font-style: normal;
+  }
 
-  /* ── Кто приедет ────────────────────────────────────────── */
-  .master { padding: 88px 0 80px; background: var(--bg-2); }
-  .master-grid { display: grid; grid-template-columns: 280px 1fr; gap: 56px; align-items: start; }
+  /* ── кто приедет ────────────────────────────────────────── */
+  .master { background: var(--paper-2); border-top: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink); }
+  .master-grid { display: grid; grid-template-columns: 280px 1fr; gap: 48px; align-items: start; }
   .master-photo {
-    aspect-ratio: 3/3.6; border: 1px dashed #ece5d63a;
+    aspect-ratio: 3/3.6;
+    border: 1.5px solid var(--ink);
+    background:
+      linear-gradient(to top right, transparent calc(50% - 0.5px), var(--rule) calc(50% - 0.5px), var(--rule) calc(50% + 0.5px), transparent calc(50% + 0.5px)),
+      linear-gradient(to bottom right, transparent calc(50% - 0.5px), var(--rule) calc(50% - 0.5px), var(--rule) calc(50% + 0.5px), transparent calc(50% + 0.5px)),
+      var(--paper);
     display: flex; align-items: center; justify-content: center; text-align: center;
-    padding: 22px; font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
-    color: var(--mute); line-height: 2;
+    padding: 22px;
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--pencil); line-height: 2;
   }
-  .master-copy h3 { font-family: 'Fraunces', serif; font-weight: 400; font-size: 30px; letter-spacing: -0.02em; margin: 0 0 16px; }
-  .master-copy h3 em { font-style: italic; color: var(--accent); font-weight: 300; }
-  .master-copy p { font-size: 16px; line-height: 1.7; color: var(--tx-2); max-width: 52ch; margin: 0 0 14px; }
-  .master-copy .todo { font-size: 12px; color: var(--mute); border-left: 2px solid var(--accent); padding-left: 14px; margin-top: 20px; line-height: 1.7; max-width: 48ch; }
+  .master-copy h3 { font-weight: 800; font-size: 27px; letter-spacing: -0.02em; margin: 0 0 16px; }
+  .master-copy h3 em { font-style: normal; color: var(--red); }
+  .master-copy p { font-size: 15.5px; line-height: 1.7; color: var(--ink-2); max-width: 52ch; margin: 0 0 14px; }
+  .master-copy .todo {
+    font-family: var(--mono); font-size: 11.5px; color: var(--pencil);
+    border-left: 2px solid var(--red); padding-left: 14px; margin-top: 20px;
+    line-height: 1.8; max-width: 52ch;
+  }
   .reviews-ph {
-    margin-top: 36px; border: 1px dashed #ece5d63a; padding: 18px;
-    font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--mute); text-align: center;
+    margin-top: 32px; border: 1.5px dashed var(--pencil); padding: 16px;
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--pencil); text-align: center;
   }
 
-  /* ── FAQ ────────────────────────────────────────────────── */
-  .faq { padding: 88px 0 80px; }
-
-  /* ── Финал ──────────────────────────────────────────────── */
-  .final { padding: 104px 0 96px; border-top: 1px solid var(--tx); }
-  .final-inner { max-width: 600px; margin: 0 auto; text-align: center; }
-  .final .rule3 { color: var(--accent); letter-spacing: .6em; font-family: 'Fraunces', serif; font-style: italic; font-size: 14px; margin-bottom: 40px; }
-  .final h2 { font-family: 'Fraunces', serif; font-weight: 400; font-size: clamp(34px, 4.6vw, 54px); letter-spacing: -0.025em; line-height: 1.04; margin: 0 0 16px; }
-  .final h2 em { font-style: italic; color: var(--accent); font-weight: 300; }
-  .final .sub { font-family: 'Fraunces', serif; font-style: italic; font-weight: 300; font-size: 18px; line-height: 1.5; color: var(--tx-2); margin: 0 0 40px; }
-  .msgrs { display: flex; gap: 28px; justify-content: center; margin-top: 24px; flex-wrap: wrap; }
+  /* ── финал ──────────────────────────────────────────────── */
+  .final { padding: 96px 0 88px; }
+  .final-inner { max-width: 620px; margin: 0 auto; text-align: center; }
+  .final .rule3 { font-family: var(--mono); color: var(--red); letter-spacing: .6em; font-size: 13px; margin-bottom: 36px; }
+  .final h2 {
+    font-weight: 800; font-size: clamp(32px, 4.6vw, 50px);
+    letter-spacing: -0.03em; line-height: 1.05; margin: 0 0 16px;
+  }
+  .final h2 em { font-style: normal; text-decoration: underline wavy var(--red); text-decoration-thickness: 2.5px; text-underline-offset: 7px; }
+  .final .sub { font-size: 17px; line-height: 1.65; color: var(--ink-2); margin: 0 0 36px; }
+  .final .sub2 { font-size: 15px; color: var(--ink-2); margin: 40px 0 0; }
+  .msgrs { display: flex; gap: 26px; justify-content: center; margin-top: 20px; flex-wrap: wrap; }
   .msgrs a {
-    color: var(--tx); text-decoration: none;
-    font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
-    border-bottom: 1px solid var(--tx); padding-bottom: 3px;
-    transition: color .2s, border-color .2s;
+    font-family: var(--mono); color: var(--ink); text-decoration: none;
+    font-size: 12px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
+    border-bottom: 1.5px solid var(--ink); padding-bottom: 3px;
+    transition: color .15s, border-color .15s;
   }
-  .msgrs a:hover { color: var(--accent); border-color: var(--accent); }
+  .msgrs a:hover { color: var(--red); border-color: var(--red); }
 
-  /* ── Подвал ─────────────────────────────────────────────── */
-  footer { border-top: 1px solid var(--rule); padding: 44px 0 40px; }
-  .foot-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; }
-  .foot-grid .brand { font-family: 'Fraunces', serif; font-style: italic; font-size: 30px; line-height: 1; }
-  .foot-grid .brand .dot { color: var(--accent); }
-  .foot-grid .brand .tag { display: block; font-family: 'Inter', sans-serif; font-style: normal; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--mute); margin-top: 12px; }
-  .foot-grid .col h4 { font-size: 10px; letter-spacing: .22em; text-transform: uppercase; color: var(--mute); margin: 0 0 12px; font-weight: 500; }
-  .foot-grid .col a, .foot-grid .col span { display: block; color: var(--tx); text-decoration: none; font-size: 13.5px; padding: 4px 0; }
-  .foot-grid .col a:hover { color: var(--accent); }
+  /* ── подвал: основная надпись ───────────────────────────── */
+  footer { border-top: 1.5px solid var(--ink); }
+  .foot-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; }
+  .foot-grid > div { padding: 28px 24px; }
+  .foot-grid > div + div { border-left: 1px solid var(--rule); }
+  .foot-grid .brand { font-weight: 800; font-size: 24px; line-height: 1; }
+  .foot-grid .brand .dot { color: var(--red); }
+  .foot-grid .brand .tag {
+    display: block; font-family: var(--mono); font-weight: 500;
+    font-size: 10px; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--pencil); margin-top: 10px;
+  }
+  .foot-grid .col h4 {
+    font-family: var(--mono); font-size: 10px; letter-spacing: .2em;
+    text-transform: uppercase; color: var(--pencil); margin: 0 0 10px; font-weight: 600;
+  }
+  .foot-grid .col a, .foot-grid .col span { display: block; color: var(--ink); text-decoration: none; font-size: 13px; padding: 3px 0; }
+  .foot-grid .col a:hover { color: var(--red); }
   .colophon {
-    margin-top: 40px; padding-top: 18px; border-top: 1px solid var(--rule);
+    border-top: 1px solid var(--rule);
+    padding: 14px 24px;
     display: flex; justify-content: space-between; gap: 18px; flex-wrap: wrap;
-    font-size: 10.5px; letter-spacing: .2em; text-transform: uppercase; color: var(--mute);
+    font-family: var(--mono); font-size: 10px; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--pencil);
   }
 
-  /* ── Мобильная панель ───────────────────────────────────── */
+  /* ── мобильная панель ───────────────────────────────────── */
   .mobile-bar {
     position: fixed; bottom: 0; left: 0; right: 0; z-index: 60; display: none;
-    background: var(--bg); border-top: 1px solid var(--tx);
+    background: var(--paper); border-top: 1.5px solid var(--ink);
     padding: 12px 16px; gap: 12px;
   }
-  .mobile-bar .btn { flex: 1; text-align: center; padding: 14px 10px; }
+  .mobile-bar .btn { flex: 1; justify-content: center; padding: 14px 10px; box-shadow: none; }
 
-  /* ── Адаптив ────────────────────────────────────────────── */
-  @media (max-width: 900px) {
-    .wrap { padding: 0 30px; }
-    .bullets { grid-template-columns: 1fr 1fr; gap: 20px; }
-    .trust-grid, .steps-grid, .price-grid { grid-template-columns: 1fr; gap: 24px; }
+  /* ── появление и прорисовка линий ───────────────────────── */
+  .rv { opacity: 0; transform: translateY(12px); transition: opacity .55s ease, transform .55s ease; }
+  .rv.on { opacity: 1; transform: none; }
+  svg .draw { stroke-dasharray: 1; stroke-dashoffset: 1; }
+  .on svg .draw, svg.on .draw { stroke-dashoffset: 0; transition: stroke-dashoffset 1.4s ease .15s; }
+  @media (prefers-reduced-motion: reduce) {
+    .rv { opacity: 1; transform: none; transition: none; }
+    svg .draw { stroke-dashoffset: 0 !important; transition: none !important; }
+    html { scroll-behavior: auto; }
+  }
+
+  /* ── адаптив ────────────────────────────────────────────── */
+  @media (max-width: 940px) {
+    .wrap { padding: 0 28px; }
+    .dim { margin: 0 28px; }
+    .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+    .bullets { grid-template-columns: 1fr 1fr; gap: 22px; }
+    .trust-grid, .price-grid { grid-template-columns: 1fr; gap: 26px; }
+    .steps-grid { grid-template-columns: 1fr; gap: 44px; padding-top: 0; }
+    .steps-grid::before { display: none; }
+    .step { padding-left: 44px; }
+    .step .n { top: -2px; }
     .master-grid { grid-template-columns: 1fr; gap: 30px; }
     .master-photo { max-width: 280px; }
   }
   @media (max-width: 600px) {
-    .wrap { padding: 0 20px; }
+    .sheet { margin: 8px 8px 0; }
+    .wrap { padding: 0 18px; }
+    .dim { margin: 0 18px; }
+    .dim .t { letter-spacing: .12em; font-size: 9.5px; }
+    .topbar { grid-template-columns: 1fr auto; }
     .topbar .meta .phone-num { display: none; }
-    .hero { padding: 52px 0 48px; }
-    .bullets { grid-template-columns: 1fr; gap: 18px; }
-    .trust, .what, .steps, .prices, .qa, .master, .faq { padding: 56px 0 48px; }
-    .what-row { grid-template-columns: 36px 1fr; gap: 14px; }
-    .final { padding: 64px 0 60px; }
+    .hero { padding: 44px 0 42px; }
+    section { padding: 52px 0 46px; }
+    .bullets { grid-template-columns: 1fr; gap: 20px; }
+    .foot-grid { grid-template-columns: 1fr; }
+    .foot-grid > div + div { border-left: 0; border-top: 1px solid var(--rule); }
+    .final { padding: 60px 0 56px; }
     .mobile-bar { display: flex; }
-    footer { padding-bottom: 120px; }
-    .foot-grid { grid-template-columns: 1fr; gap: 26px; }
-    .colophon { flex-direction: column; gap: 8px; }
+    footer { padding-bottom: 0; }
+    body { padding-bottom: 76px; }
+    .qa-pull .stamp { padding: 20px 22px; }
   }
 </style>
 <!-- Yandex.Metrika counter -->
@@ -378,8 +555,9 @@
 </head>
 <body>
 
-<div class="wrap">
+<div class="sheet">
 
+<div class="wrap">
   <!-- ── Панель ─────────────────────────────────────────── -->
   <header class="topbar">
     <div class="masthead">Точка звука<span class="dot">.</span>
@@ -391,128 +569,184 @@
     </div>
   </header>
 
-  <!-- ── Первый экран: одна боль + цена + выгоды ────────── -->
+  <!-- ── Первый экран ───────────────────────────────────── -->
   <section class="hero">
-    <div class="kicker">Домашние кинотеатры · телевизоры · акустика</div>
-    <h1 class="headline">Купили технику, а она молчит? <span class="it">Подключим за один визит.</span></h1>
-    <p class="standfirst">Соберём и подключим кинотеатр, саундбар или колонки к ресиверу, настроим звук с телевизора и приставок, уберём провода и покажем, какую кнопку жать. Сегодня вечером уже смотрите кино.</p>
-    <p class="price-line"><b>Выезд и подключение — от 2 900 ₽.</b><br>Точную цену называем по телефону до выезда, и она не меняется.</p>
-    <div class="hero-cta">
-      <a class="btn" href="tel:+79032405040">Позвонить: +7 (903) 240-50-40</a>
-      <a class="btn line" href="https://t.me/vad6277">Написать в Telegram</a>
+    <div class="hero-grid">
+      <div>
+        <div class="kicker">Домашние кинотеатры · телевизоры · акустика</div>
+        <h1 class="headline">Купили технику, а она молчит? <span class="it">Подключим за один визит.</span></h1>
+        <p class="standfirst">Соберём и подключим кинотеатр, саундбар или колонки к ресиверу, настроим звук с телевизора и приставок, уберём провода и покажем, какую кнопку жать. Сегодня вечером уже смотрите кино.</p>
+        <div class="price-line">
+          <span class="st">фикс. до выезда</span>
+          <b>Выезд и подключение — от 2 900 ₽.</b><br>
+          Точную цену называем по телефону до выезда, и она не меняется.
+        </div>
+        <div class="hero-cta">
+          <a class="btn fill tel" href="tel:+79032405040">Позвонить: +7 (903) 240-50-40</a>
+          <a class="btn" href="https://t.me/vad6277">Написать в Telegram</a>
+        </div>
+      </div>
+
+      <!-- схема подключения, лист 1 -->
+      <div class="draft-card rv">
+        <div class="cap"><span>Схема № 1 · Коммутация</span><span>М 1:1</span></div>
+        <svg viewBox="0 0 460 330" role="img" aria-label="Схема подключения домашнего кинотеатра">
+          <!-- ТВ -->
+          <rect class="draw" x="150" y="18" width="160" height="92" fill="none" stroke="#1e2731" stroke-width="1.5" pathLength="1"/>
+          <rect x="196" y="110" width="68" height="7" fill="none" stroke="#1e2731" stroke-width="1.2" class="draw" pathLength="1"/>
+          <text x="230" y="68" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="#1e2731">ТВ</text>
+          <!-- порт ARC -->
+          <circle cx="230" cy="110" r="3" fill="#c2452a"/>
+          <text x="245" y="132" font-family="Caveat, cursive" font-size="19" fill="#c2452a" transform="rotate(-2 245 132)">сюда HDMI ARC →</text>
+          <!-- линия ТВ → ресивер -->
+          <path class="draw" d="M230,117 L230,168" fill="none" stroke="#c2452a" stroke-width="1.5" stroke-dasharray="none" pathLength="1"/>
+          <!-- Ресивер -->
+          <rect class="draw" x="155" y="168" width="150" height="52" fill="none" stroke="#1e2731" stroke-width="1.5" pathLength="1"/>
+          <text x="230" y="199" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11.5" fill="#1e2731">РЕСИВЕР</text>
+          <!-- линии к колонкам -->
+          <path class="draw" d="M155,194 L84,194 L84,238" fill="none" stroke="#1e2731" stroke-width="1.2" pathLength="1"/>
+          <path class="draw" d="M305,194 L376,194 L376,238" fill="none" stroke="#1e2731" stroke-width="1.2" pathLength="1"/>
+          <path class="draw" d="M196,220 L196,252" fill="none" stroke="#1e2731" stroke-width="1.2" pathLength="1"/>
+          <path class="draw" d="M264,220 L264,252" fill="none" stroke="#1e2731" stroke-width="1.2" pathLength="1"/>
+          <!-- колонки -->
+          <rect class="draw" x="66" y="238" width="36" height="58" fill="none" stroke="#1e2731" stroke-width="1.5" pathLength="1"/>
+          <text x="84" y="312" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="#6b7480">ЛЕВ.</text>
+          <rect class="draw" x="358" y="238" width="36" height="58" fill="none" stroke="#1e2731" stroke-width="1.5" pathLength="1"/>
+          <text x="376" y="312" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="#6b7480">ПРАВ.</text>
+          <rect class="draw" x="172" y="252" width="48" height="30" fill="none" stroke="#1e2731" stroke-width="1.5" pathLength="1"/>
+          <text x="196" y="298" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="#6b7480">ЦЕНТР</text>
+          <circle class="draw" cx="264" cy="268" r="17" fill="none" stroke="#1e2731" stroke-width="1.5" pathLength="1"/>
+          <text x="264" y="302" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="#6b7480">САБ</text>
+          <!-- пометка фазы -->
+          <text x="30" y="222" font-family="Caveat, cursive" font-size="19" fill="#c2452a" transform="rotate(-3 30 222)">фаза + / − !</text>
+          <!-- размерная линия -->
+          <path class="draw" d="M420,18 L420,296" fill="none" stroke="#6b7480" stroke-width="1" pathLength="1"/>
+          <path d="M416,24 L420,18 L424,24" fill="none" stroke="#6b7480" stroke-width="1"/>
+          <path d="M416,290 L420,296 L424,290" fill="none" stroke="#6b7480" stroke-width="1"/>
+          <text x="442" y="160" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="#6b7480" transform="rotate(90 442 160)">ОДИН ВИЗИТ · 1,5–3 Ч</text>
+        </svg>
+      </div>
     </div>
+
     <ul class="bullets">
-      <li><b>Один визит — <em>и всё работает</em></b>Свои инструменты, кабели и переходники с собой.</li>
-      <li><b>Цена — <em>до выезда</em></b>Фиксируем по телефону. «По ходу вскрылось» не бывает.</li>
-      <li><b>Технику <em>не увозим</em></b>Вся работа при вас. Никаких «заберём на диагностику».</li>
-      <li><b>Не заработало — <em>не платите</em></b>Проверяем вместе на вашем кино, оплата в конце.</li>
+      <li class="rv"><b>Один визит — <em>и всё работает</em></b>Свои инструменты, кабели и переходники с собой.</li>
+      <li class="rv"><b>Цена — <em>до выезда</em></b>Фиксируем по телефону. «По ходу вскрылось» не бывает.</li>
+      <li class="rv"><b>Технику <em>не увозим</em></b>Вся работа при вас. Никаких «заберём на диагностику».</li>
+      <li class="rv"><b>Не заработало — <em>не платите</em></b>Проверяем вместе на вашем кино, оплата в конце.</li>
     </ul>
   </section>
+</div>
 
+<div class="dim" aria-hidden="true"><span class="l a"></span><span class="t">Узел 02 · Правила</span><span class="l b"></span></div>
+
+<div class="wrap">
   <!-- ── Анти-развод ────────────────────────────────────── -->
   <section class="trust">
     <div class="section-label">Правила · Почему нас не боятся пускать в дом</div>
     <h2 class="section-title">Три правила <em>против</em> «мастеров-диагностов».</h2>
     <p class="intro">Про «мастеров», которые находят «сложную неисправность», увозят телевизор и выставляют счёт втрое, писали и Известия, и Пикабу. У нас это решается тремя правилами — они не обещания, а порядок работы.</p>
     <div class="trust-grid">
-      <div class="trust-card">
-        <div class="n">1.</div>
+      <div class="trust-card rv">
+        <span class="n">П. 1</span>
         <h3>Цена — до выезда</h3>
         <p>Называем по телефону после пары вопросов о технике и фиксируем. Выросла по ходу — это наша проблема, не ваша.</p>
       </div>
-      <div class="trust-card">
-        <div class="n">2.</div>
+      <div class="trust-card rv">
+        <span class="n">П. 2</span>
         <h3>Техника остаётся дома</h3>
         <p>Всё делается при вас, за один визит. Мы устанавливаем и подключаем, а не «ремонтируем в мастерской».</p>
       </div>
-      <div class="trust-card">
-        <div class="n">3.</div>
+      <div class="trust-card rv">
+        <span class="n">П. 3</span>
         <h3>Платите в конце</h3>
         <p>Проверили вместе на вашем фильме — тогда и оплата. Не заработало — не платите.</p>
       </div>
     </div>
   </section>
-
 </div>
 
-<!-- ── Что подключаем (full-bleed) ──────────────────────── -->
+<div class="dim" aria-hidden="true"><span class="l a"></span><span class="t">Узел 03 · Спецификация работ</span><span class="l b"></span></div>
+
+<!-- ── Что подключаем ───────────────────────────────────── -->
 <section class="what">
   <div class="wrap">
     <div class="section-label">Работы · Что подключаем</div>
     <h2 class="section-title">От саундбара до кинотеатра <em>с проводкой</em> под плинтусом.</h2>
     <div class="what-list">
-      <div class="what-row">
-        <div class="gn">i.</div>
+      <div class="what-row rv">
+        <div class="gn">поз. i</div>
         <div class="t">Домашний кинотеатр к телевизору<small>ресивер, колонки, сабвуфер — развесим, подключим, сфазируем</small></div>
       </div>
-      <div class="what-row">
-        <div class="gn">ii.</div>
+      <div class="what-row rv">
+        <div class="gn">поз. ii</div>
         <div class="t">Саундбар<small>HDMI ARC, оптика — разберёмся, куда втыкать, и звук пойдёт</small></div>
       </div>
-      <div class="what-row">
-        <div class="gn">iii.</div>
+      <div class="what-row rv">
+        <div class="gn">поз. iii</div>
         <div class="t">Сборка кинотеатра «из коробок»<small>распакуем, расставим колонки по местам, скоммутируем, настроим</small></div>
       </div>
-      <div class="what-row">
-        <div class="gn">iv.</div>
+      <div class="what-row rv">
+        <div class="gn">поз. iv</div>
         <div class="t">Приставки, PS, ТВ-боксы<small>настроим телевизор и источники так, чтобы всё включалось с одного пульта</small></div>
       </div>
-      <div class="what-row hot">
-        <div class="gn">v.</div>
+      <div class="what-row hot rv">
+        <div class="gn">поз. v</div>
         <div class="t">Старый кинотеатр к новому телевизору<small>SCART, тюльпаны, оптика — подберём переходник, заставим работать</small></div>
       </div>
     </div>
-    <p class="note">Если у вас случай «на телевизоре только HDMI, а на кинотеатре только SCART» — это к нам, таких выездов много.</p>
+    <p class="note rv"><span class="hand-note">частый случай!</span> Если у вас случай «на телевизоре только HDMI, а на кинотеатре только SCART» — это к нам, таких выездов много.</p>
   </div>
 </section>
 
-<div class="wrap">
+<div class="dim" aria-hidden="true"><span class="l a"></span><span class="t">Узел 04 · Порядок работ</span><span class="l b"></span></div>
 
+<div class="wrap">
   <!-- ── Как проходит визит ─────────────────────────────── -->
   <section class="steps">
     <div class="section-label">Порядок · Как проходит визит</div>
     <div class="steps-grid">
-      <div class="step">
+      <div class="step rv">
         <div class="n">1</div>
         <h3>Звонок — 5 минут</h3>
         <p>Говорите, что за техника и что не работает. Называем точную цену и время визита.</p>
       </div>
-      <div class="step">
+      <div class="step rv">
         <div class="n">2</div>
         <h3>Один визит</h3>
         <p>Собираем, расставляем, подключаем, провода — в короб или связку. Свои инструменты, кабели и переходники с собой.</p>
       </div>
-      <div class="step">
+      <div class="step rv">
         <div class="n">3</div>
         <h3>Проверяем вместе</h3>
         <p>Включаем ваш фильм, показываем какие кнопки жать, оставляем шпаргалку. Работает — платите.</p>
       </div>
     </div>
   </section>
-
 </div>
 
-<!-- ── Цены (full-bleed) ────────────────────────────────── -->
+<div class="dim" aria-hidden="true"><span class="l a"></span><span class="t">Узел 05 · Прейскурант</span><span class="l b"></span></div>
+
+<!-- ── Цены ─────────────────────────────────────────────── -->
 <section class="prices" id="ceny">
   <div class="wrap">
     <div class="section-label">Прейскурант · Цены</div>
     <div class="price-grid">
-      <div class="price-card">
+      <div class="price-card rv">
         <div class="pnum">№ 1</div>
         <h3>Подключение кинотеатра, <em>саундбара, акустики</em></h3>
-        <div class="cost">от 2 900 <span class="cur">₽</span></div>
+        <div class="cost">от 2 900 ₽</div>
         <p>Коммутация, звук с ТВ и приставок, провода в связку, шпаргалка по кнопкам.</p>
       </div>
-      <div class="price-card">
+      <div class="price-card rv">
         <div class="pnum">№ 2</div>
         <h3>Сборка и установка <em>с нуля</em></h3>
-        <div class="cost">от 4 900 <span class="cur">₽</span></div>
+        <div class="cost">от 4 900 ₽</div>
         <p>Кинотеатр «из коробок»: распаковка, расстановка колонок, коммутация, настройка со всех источников.</p>
       </div>
-      <div class="price-card">
+      <div class="price-card rv">
         <div class="pnum">№ 3 · выгоднее</div>
         <h3>«Всё за <em>один визит</em>»</h3>
-        <div class="cost">от 6 900 <span class="cur">₽</span></div>
+        <div class="cost">от 6 900 ₽</div>
         <p>Кинотеатр + все приставки + настройка телевизора + один пульт на всё + обучение. Дешевле, чем по отдельности.</p>
       </div>
     </div>
@@ -523,44 +757,48 @@
   </div>
 </section>
 
-<div class="wrap">
+<div class="dim" aria-hidden="true"><span class="l a"></span><span class="t">Узел 06 · Примечания</span><span class="l b"></span></div>
 
+<div class="wrap">
   <!-- ── Возражения ─────────────────────────────────────── -->
   <section class="qa">
     <div class="section-label">Разговор · Честные ответы</div>
     <div class="qa-list">
-      <div class="exchange">
+      <div class="exchange rv">
         <p class="q">Да я сам подключу, там инструкция есть.</p>
         <p class="a">Конечно, попробуйте: если разъёмы совпадают, за полчаса справитесь. К нам приходят после второго вечера с инструкцией — когда на телевизоре ARC, на кинотеатре SCART, а на форуме советуют «преобразователь SPDIF на тюльпаны». Вот это — наша работа.</p>
       </div>
-      <div class="exchange">
-        <p class="q">Цена «от 2 900» — а потом окажется десять?</p>
+      <div class="exchange rv">
+        <p class="q">Цена «от 2 900» — а потом окажется десять?</p>
         <p class="a">Нет. Цену называем по телефону, до выезда, после пары вопросов о технике. Она фиксируется. Если чего-то не хватает — кабеля, переходника — это тоже обсуждаем до выезда, а не «по ходу вскрылось».</p>
       </div>
-      <div class="exchange">
+      <div class="exchange rv">
         <p class="q">Знаю я вас: «заберём в сервис на диагностику» — и прощай телевизор.</p>
         <p class="a">Мы ничего не увозим. Вся работа — при вас, за один визит. Мы подключаем и устанавливаем, а не «ремонтируем в мастерской».</p>
       </div>
-      <div class="exchange">
+      <div class="exchange rv">
         <p class="q">А кто придёт-то? На агрегаторах лотерея.</p>
         <p class="a">Придёт тот, кто с вами говорил по телефону. Фото и опыт — ниже на странице. Без субподряда и «свободного мастера поблизости».</p>
       </div>
     </div>
-    <div class="qa-pull">
-      <blockquote>Не заработало — <em>не платите</em>.</blockquote>
-      <cite>Проверяем на вашем кино, при вас</cite>
+    <div class="qa-pull rv">
+      <div class="stamp">
+        <blockquote>Не заработало — не платите.</blockquote>
+        <cite>Проверяем на вашем кино, при вас</cite>
+      </div>
     </div>
   </section>
-
 </div>
 
-<!-- ── Кто приедет (full-bleed) ─────────────────────────── -->
+<div class="dim" aria-hidden="true"><span class="l a"></span><span class="t">Узел 07 · Исполнитель</span><span class="l b"></span></div>
+
+<!-- ── Кто приедет ──────────────────────────────────────── -->
 <section class="master">
   <div class="wrap">
     <div class="section-label">Люди · Кто приедет</div>
     <div class="master-grid">
-      <div class="master-photo">сюда: фото мастера за работой —<br/>за стойкой с ресивером<br/>или с колонкой в руках</div>
-      <div class="master-copy">
+      <div class="master-photo rv">сюда: фото мастера за работой —<br/>за стойкой с ресивером<br/>или с колонкой в руках</div>
+      <div class="master-copy rv">
         <h3>[Имя] — <em>мастер по установке</em></h3>
         <p>Собираю и устанавливаю домашние кинотеатры с [год]. [N] установок: от саундбара в однушке до 5.1 с проводкой под плинтусом.</p>
         <p>Разуваюсь, после работы убираю за собой, провода — в связку.</p>
@@ -571,29 +809,30 @@
   </div>
 </section>
 
-<div class="wrap">
+<div class="dim" aria-hidden="true"><span class="l a"></span><span class="t">Узел 08 · Частые вопросы</span><span class="l b"></span></div>
 
+<div class="wrap">
   <!-- ── FAQ ────────────────────────────────────────────── -->
   <section class="qa faq" id="voprosy">
     <div class="section-label">Приложение · Частые вопросы</div>
     <div class="qa-list">
-      <div class="exchange">
+      <div class="exchange rv">
         <p class="q">У меня старый кинотеатр, а телевизор новый. Реально подключить?</p>
         <p class="a">Почти всегда да: оптика, SCART, тюльпаны, конвертеры. Скажете модели по телефону — сразу скажем, что понадобится и сколько это стоит.</p>
       </div>
-      <div class="exchange">
+      <div class="exchange rv">
         <p class="q">Сколько длится визит?</p>
         <p class="a">Обычно 1,5–3 часа: зависит от того, собираем ли систему с нуля и сколько техники подключаем.</p>
       </div>
-      <div class="exchange">
+      <div class="exchange rv">
         <p class="q">Кабели и переходники покупать самому?</p>
         <p class="a">Не нужно: ходовые кабели и переходники привозим с собой. Если понадобится что-то редкое — скажем заранее, вместе с ценой.</p>
       </div>
-      <div class="exchange">
+      <div class="exchange rv">
         <p class="q">Куда выезжаете?</p>
         <p class="a">Москва и ближнее Подмосковье. За МКАД — обсудим по телефону.</p>
       </div>
-      <div class="exchange">
+      <div class="exchange rv">
         <p class="q">А если у вас не получится?</p>
         <p class="a">Тогда вы не платите. Такое бывает редко и обычно из-за неисправной техники — честно скажем, что с ней.</p>
       </div>
@@ -606,16 +845,17 @@
       <div class="rule3">·  ·  ·</div>
       <h2>Расскажите, что <em>не подключается</em>.</h2>
       <p class="sub">Позвоните — за пять минут скажем, лечится ли это, сколько стоит и когда приедет мастер.</p>
-      <a class="btn" href="tel:+79032405040">Позвонить: +7 (903) 240-50-40</a>
-      <p class="sub" style="margin:36px 0 0; font-size:16px;">Не любите звонить? Напишите напрямую — отвечаем быстро:</p>
+      <a class="btn fill tel" href="tel:+79032405040">Позвонить: +7 (903) 240-50-40</a>
+      <p class="sub sub2">Не любите звонить? Напишите напрямую — отвечаем быстро:</p>
       <div class="msgrs">
         <a href="https://t.me/vad6277">Telegram</a>
         <a href="https://wa.me/79032405040">WhatsApp</a>
       </div>
     </div>
   </section>
+</div>
 
-  <!-- ── Подвал ─────────────────────────────────────────── -->
+  <!-- ── Подвал: основная надпись ─────────────────────────── -->
   <footer>
     <div class="foot-grid">
       <div class="brand">Точка звука<span class="dot">.</span>
@@ -635,16 +875,17 @@
     </div>
     <div class="colophon">
       <span>© Точка звука · [ИП / реквизиты — плейсхолдер]</span>
+      <span>Лист 1 · Листов 1</span>
       <span>Москва</span>
     </div>
   </footer>
 
-</div>
+</div><!-- /.sheet -->
 
 <!-- Липкая панель на мобайле -->
 <div class="mobile-bar">
-  <a class="btn line" href="https://t.me/vad6277">Telegram</a>
-  <a class="btn" href="tel:+79032405040">Позвонить</a>
+  <a class="btn" href="https://t.me/vad6277">Telegram</a>
+  <a class="btn fill" href="tel:+79032405040">Позвонить</a>
 </div>
 
 <script>
@@ -653,6 +894,12 @@
     a.addEventListener('click', () => { if (typeof ym === 'function') ym(104341207, 'reachGoal', 'phone_click'); }));
   document.querySelectorAll('a[href*="wa.me"], a[href*="t.me"]').forEach(a =>
     a.addEventListener('click', () => { if (typeof ym === 'function') ym(104341207, 'reachGoal', 'messenger_click'); }));
+
+  // появление блоков и прорисовка линий схемы при скролле
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); } });
+  }, { threshold: .18 });
+  document.querySelectorAll('.rv').forEach(el => io.observe(el));
 </script>
 </body>
 </html>
