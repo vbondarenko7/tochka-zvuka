@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <title>Точка звука — установка и подключение домашних кинотеатров и ТВ в Москве</title>
 <meta name="description" content="Соберём и подключим домашний кинотеатр, саундбар или колонки к ресиверу за один визит. Цена до выезда, технику не увозим, не заработало — не платите. Москва.">
 <link rel="canonical" href="https://tochka-zvuka.ru/">
@@ -510,10 +510,12 @@
   @media (max-width: 940px) {
     .wrap { padding: 0 28px; }
     .dim { margin: 0 28px; }
-    .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+    .hero-grid { grid-template-columns: 1fr; gap: 36px; }
+    .draft-card { max-width: 560px; }
     .bullets { grid-template-columns: 1fr 1fr; gap: 22px; }
-    .trust-grid, .price-grid { grid-template-columns: 1fr; gap: 26px; }
-    .steps-grid { grid-template-columns: 1fr; gap: 44px; padding-top: 0; }
+    /* iPad: карточки сеткой, а не колонкой во всю ширину */
+    .trust-grid, .price-grid { grid-template-columns: repeat(auto-fit, minmax(215px, 1fr)); gap: 22px; row-gap: 30px; }
+    .steps-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 36px; row-gap: 44px; padding-top: 0; }
     .steps-grid::before { display: none; }
     .step { padding-left: 44px; }
     .step .n { top: -2px; }
@@ -528,14 +530,27 @@
     .topbar { grid-template-columns: 1fr auto; }
     .topbar .meta .phone-num { display: none; }
     .hero { padding: 44px 0 42px; }
+    .hero-grid { gap: 26px; }
     section { padding: 52px 0 46px; }
+    /* кнопки: во всю ширину, номер не переносится */
+    .btn {
+      width: 100%; justify-content: center;
+      padding: 17px 12px;
+      font-size: 11.5px; letter-spacing: .07em;
+      white-space: nowrap;
+    }
+    .hero-cta { flex-direction: column; align-items: stretch; gap: 12px; margin-bottom: 14px; }
+    /* маркер буллита — слева от заголовка, не отдельной строкой */
     .bullets { grid-template-columns: 1fr; gap: 20px; }
+    .bullets li { padding-top: 0; padding-left: 22px; }
+    .bullets li::before { top: 5px; left: 0; }
     .foot-grid { grid-template-columns: 1fr; }
     .foot-grid > div + div { border-left: 0; border-top: 1px solid var(--rule); }
     .final { padding: 60px 0 56px; }
-    .mobile-bar { display: flex; }
+    .final .btn { width: auto; }
+    .mobile-bar { display: flex; padding-bottom: calc(12px + env(safe-area-inset-bottom)); }
     footer { padding-bottom: 0; }
-    body { padding-bottom: 76px; }
+    body { padding-bottom: calc(80px + env(safe-area-inset-bottom)); }
     .qa-pull .stamp { padding: 20px 22px; }
   }
 </style>
