@@ -416,16 +416,16 @@
   .master { background: var(--paper-2); border-top: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink); }
   .master-grid { display: grid; grid-template-columns: 280px 1fr; gap: 48px; align-items: start; }
   .master-photo {
-    aspect-ratio: 3/3.6;
+    display: block; width: 100%; height: auto;
     border: 1.5px solid var(--ink);
-    background:
-      linear-gradient(to top right, transparent calc(50% - 0.5px), var(--rule) calc(50% - 0.5px), var(--rule) calc(50% + 0.5px), transparent calc(50% + 0.5px)),
-      linear-gradient(to bottom right, transparent calc(50% - 0.5px), var(--rule) calc(50% - 0.5px), var(--rule) calc(50% + 0.5px), transparent calc(50% + 0.5px)),
-      var(--paper);
-    display: flex; align-items: center; justify-content: center; text-align: center;
-    padding: 22px;
+    box-shadow: 5px 5px 0 rgba(30, 39, 49, .12);
+  }
+  .master-figure { margin: 0; }
+  .master-figure figcaption {
+    margin-top: 10px;
     font-family: var(--mono); font-size: 10.5px; letter-spacing: .14em;
-    text-transform: uppercase; color: var(--pencil); line-height: 2;
+    text-transform: uppercase; color: var(--pencil);
+    display: flex; justify-content: space-between; gap: 10px;
   }
   .master-copy h3 { font-weight: 800; font-size: 27px; letter-spacing: -0.02em; margin: 0 0 16px; }
   .master-copy h3 em { font-style: normal; color: var(--red); }
@@ -812,7 +812,10 @@
   <div class="wrap">
     <div class="section-label">Люди · Кто приедет</div>
     <div class="master-grid">
-      <div class="master-photo rv">сюда: фото мастера за работой —<br/>за стойкой с ресивером<br/>или с колонкой в руках</div>
+      <figure class="master-figure rv">
+        <img class="master-photo" src="/vadim.jpg" width="800" height="800" alt="Вадим — мастер по установке и подключению домашних кинотеатров">
+        <figcaption><span>Фиг. 1 · Мастер</span><span>Вадим</span></figcaption>
+      </figure>
       <div class="master-copy rv">
         <h3>Вадим — <em>мастер по установке</em></h3>
         <p>Собираю, устанавливаю и подключаю домашние кинотеатры с 2013 года: от саундбара в однушке до 5.1 с проводкой под плинтусом.</p>
