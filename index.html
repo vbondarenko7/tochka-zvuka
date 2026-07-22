@@ -850,6 +850,59 @@
     <div class="section-label">Дополнительно · Настройка звука</div>
     <h2 class="section-title">Подключить — половина дела. Вторая — <em>чтобы это звучало</em>.</h2>
     <p class="note rv" style="margin-top:0;margin-bottom:26px;">Техника хорошая, подключено правильно, а смотреть неприятно: бас гудит так, что стучат соседи, а диалоги приходится переспрашивать. Обычно дело не в колонках — дело в комнате. Это отдельная работа, приезжаем и делаем.</p>
+
+    <!-- схема замера комнаты, лист 2 -->
+    <div class="draft-card rv" style="max-width:640px;margin:0 auto 34px;">
+      <div class="cap"><span>Схема № 2 · Замер комнаты</span><span>вид сверху</span></div>
+      <svg viewBox="0 0 480 270" role="img" aria-label="Схема замера акустики комнаты: микрофон в точке прослушивания и график частот с горбом на басах">
+        <!-- ── комната, вид сверху ── -->
+        <rect class="draw" x="16" y="40" width="214" height="200" fill="none" stroke="#1e2731" stroke-width="1.5" pathLength="1"/>
+        <!-- ТВ на стене -->
+        <rect class="draw" x="88" y="36" width="70" height="8" fill="none" stroke="#1e2731" stroke-width="1.5" pathLength="1"/>
+        <text x="123" y="62" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="#6b7480">ТВ</text>
+        <!-- колонки -->
+        <rect class="draw" x="32" y="60" width="18" height="26" fill="none" stroke="#1e2731" stroke-width="1.3" pathLength="1"/>
+        <rect class="draw" x="196" y="60" width="18" height="26" fill="none" stroke="#1e2731" stroke-width="1.3" pathLength="1"/>
+        <!-- сабвуфер в углу -->
+        <circle class="draw" cx="44" cy="212" r="14" fill="none" stroke="#1e2731" stroke-width="1.4" pathLength="1"/>
+        <text x="44" y="238" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#6b7480">САБ</text>
+        <!-- диван -->
+        <rect class="draw" x="78" y="180" width="90" height="26" fill="none" stroke="#1e2731" stroke-width="1.3" pathLength="1"/>
+        <text x="123" y="198" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#6b7480">ДИВАН</text>
+        <!-- микрофон в точке прослушивания -->
+        <path class="draw" d="M123,172 L123,142" fill="none" stroke="#c2452a" stroke-width="1.4" pathLength="1"/>
+        <circle cx="123" cy="138" r="5" fill="#c2452a"/>
+        <circle cx="123" cy="172" r="2.5" fill="#c2452a"/>
+        <text x="123" y="128" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#6b7480">МИКРОФОН</text>
+        <!-- пометка -->
+        <text x="132" y="158" font-family="Caveat, cursive" font-size="20" fill="#c2452a" transform="rotate(-3 132 158)">меряем тут</text>
+        <!-- подпись комнаты -->
+        <text x="123" y="26" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#6b7480" letter-spacing="1.5">ПЛАН ПОМЕЩЕНИЯ</text>
+
+        <!-- ── график частот ── -->
+        <text x="376" y="26" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#6b7480" letter-spacing="1.5">ЧТО ПОКАЗАЛ ЗАМЕР</text>
+        <path class="draw" d="M282,52 L282,214 L468,214" fill="none" stroke="#6b7480" stroke-width="1" pathLength="1"/>
+        <!-- измеренная кривая: горб на низах -->
+        <path class="draw" d="M288,168 C296,96 310,82 322,116 C332,146 340,196 352,176 C362,158 370,172 384,164 C400,154 412,176 426,162 C442,148 454,166 464,158" fill="none" stroke="#1e2731" stroke-width="1.8" pathLength="1"/>
+        <!-- цель: ровнее -->
+        <path d="M288,164 C324,156 362,162 402,158 C430,155 450,160 464,158" fill="none" stroke="#c2452a" stroke-width="1.3" stroke-dasharray="5 4"/>
+        <!-- указатель на горб -->
+        <path d="M330,74 L322,96" fill="none" stroke="#c2452a" stroke-width="1"/>
+        <text x="334" y="70" font-family="Caveat, cursive" font-size="20" fill="#c2452a" transform="rotate(-2 334 70)">здесь гудит</text>
+        <text x="358" y="196" font-family="Caveat, cursive" font-size="19" fill="#c2452a" transform="rotate(-2 358 196)">так — ровнее</text>
+        <!-- оси -->
+        <text x="300" y="230" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#6b7480">НИЗКИЕ</text>
+        <text x="376" y="230" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#6b7480">СРЕДНИЕ</text>
+        <text x="450" y="230" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#6b7480">ВЫСОКИЕ</text>
+        <text x="272" y="133" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#6b7480" transform="rotate(-90 272 133)">ГРОМКОСТЬ</text>
+        <!-- размерная линия -->
+        <path class="draw" d="M16,254 L468,254" fill="none" stroke="#6b7480" stroke-width="1" pathLength="1"/>
+        <path d="M22,250 L16,254 L22,258" fill="none" stroke="#6b7480" stroke-width="1"/>
+        <path d="M462,250 L468,254 L462,258" fill="none" stroke="#6b7480" stroke-width="1"/>
+        <text x="242" y="268" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#6b7480" letter-spacing="1">ЗАМЕР · РАССТАНОВКА · ЭКВАЛАЙЗЕР · ПРОВЕРКА НА СЛУХ</text>
+      </svg>
+    </div>
+
     <div class="what-list">
       <div class="what-row rv">
         <div class="gn">поз. i</div>
