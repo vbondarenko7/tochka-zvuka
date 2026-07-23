@@ -2,7 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://tochka-zvuka.ru/</loc>
-    <lastmod>2026-07-09</lastmod>
+    <lastmod>2026-07-23</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://tochka-zvuka.ru/stati/staryy-kinoteatr-k-novomu-televizoru.html</loc>
+    <lastmod>2026-07-23</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://tochka-zvuka.ru/stati/kak-podklyuchit-domashniy-kinoteatr-k-televizoru.html</loc>
+    <lastmod>2026-07-23</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://tochka-zvuka.ru/stati/zvuk-idet-iz-televizora-a-ne-iz-kolonok.html</loc>
+    <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
   </url>
 </urlset>
